@@ -16,6 +16,8 @@ public class P01_07 {
             rt--;
         }
         return "YES";
+        // StringBuilder.reverse()로 뒤집은 후 바로 equals로 비교하는 것도 가능
+        // String객체.equalsIgnoreCase()는 대소문자 무시하고 같은지 비교
     }
 
     public static void main(String[] args){
