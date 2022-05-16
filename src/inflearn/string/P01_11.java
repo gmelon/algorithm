@@ -8,7 +8,10 @@ import java.util.Scanner;
 public class P01_11 {
 
     public static String solution(String input) {
+
+        /*
         String result = "";
+
 
         int count = 0;
         char prevChar = '0'; // 초기값
@@ -31,6 +34,25 @@ public class P01_11 {
         if (count == 1) result += prevChar;
         else result += prevChar + String.valueOf(count);
 
+        return result;
+
+         */
+
+        // 단순히 [i]와 [i+1]을 비교하는 것으로, 문자열의 마지막에 " "을 추가하는 것으로 코드를 단순화할 수 있음
+        // 이떄는 count가 1부터 시작해야 함
+        String result = "";
+        input = input + " "; // i+1을 항상 확인하므로 문자열의 뒤에 문자를 하나 더해줌
+        int count = 1;
+        for (int i = 0; i < input.length() - 1; i++) {
+            if (input.charAt(i) == input.charAt(i + 1)) {
+                // 다음 문자와 현재 문자가 같은 경우 단순히 count 만 증가
+                count++;
+            } else { // 다음 문자와 다른 경우
+                result += input.charAt(i);
+                if (count > 1) result += String.valueOf(count); // count의 경우 1보다 큰 경우에만 표시
+                count = 1; // count 초기화
+            }
+        }
         return result;
     }
 
