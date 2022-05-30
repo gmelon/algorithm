@@ -15,6 +15,8 @@ public class P02_01 {
                 answer.add(intList[i]);
             }
         }
+        // ArrayList를 toString() 하면 "[1, 2, ...]"의 형태로 변환되므로
+        // 숫자와 공백을 제외하고 ""로 replace함
         return answer.toString().replaceAll("[^0-9 ]", "");
     }
 
