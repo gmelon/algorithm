@@ -10,15 +10,17 @@ public class P02_12 {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 int cnt = 0;
-                for (int problem = 0; problem < m; problem++) {
+                for (int problemIdx = 0; problemIdx < m; problemIdx++) {
                     int idxOfI = 0;
                     int idxOfJ = 0;
-                    for (int score = 0; score < n; score++) {
-                        if (arr[problem][score] == i) idxOfI = score;
-                        if (arr[problem][score] == j) idxOfJ = score;
+                    for (int scoreIdx = 0; scoreIdx < n; scoreIdx++) {
+                        if (arr[problemIdx][scoreIdx] == i) idxOfI = scoreIdx;
+                        if (arr[problemIdx][scoreIdx] == j) idxOfJ = scoreIdx;
                     }
                     if (idxOfI < idxOfJ) cnt++;
                 }
+                // m == 수학 테스트 횟수
+                // 즉, 모든 문제에서 학생 A가 앞서고 있는 지 확인
                 if (cnt == m) answer++;
             }
         }
