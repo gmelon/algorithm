@@ -1,6 +1,5 @@
 package inflearn.array;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class P02_09 {
