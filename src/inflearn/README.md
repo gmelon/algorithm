@@ -39,3 +39,12 @@
 | [P03_04](./twopointers_slidingwindow/P03_04.java) |    연속 부분 수열    |
 | [P03_05](./twopointers_slidingwindow/P03_05.java) |   연속된 자연수의 합   |
 | [P03_06](./twopointers_slidingwindow/P03_06.java) |  최대 길이 연속부분수열  |
+
+### Hash
+|             파일명              |  문제 간략 소개  |
+|:----------------------------:|:----------:|
+| [P04_01](./hash/P04_01.java) |   학급 회장    |
+| [P04_02](./hash/P04_02.java) |    아나그램    |
+| [P04_03](./hash/P04_03.java) |  매출액의 종류   |
+| [P04_04](./hash/P04_04.java) | 모든 아나그램 찾기 |
+| [P04_05](./hash/P04_05.java) |  K번째 큰 수   |
