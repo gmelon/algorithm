@@ -40,7 +40,7 @@
 | [P03_05](./twopointers_slidingwindow/P03_05.java) |   연속된 자연수의 합   |
 | [P03_06](./twopointers_slidingwindow/P03_06.java) |  최대 길이 연속부분수열  |
 
-### Hash
+### HashMap, TreeSet
 |             파일명              |  문제 간략 소개  |
 |:----------------------------:|:----------:|
 | [P04_01](./hash/P04_01.java) |   학급 회장    |
@@ -48,3 +48,15 @@
 | [P04_03](./hash/P04_03.java) |  매출액의 종류   |
 | [P04_04](./hash/P04_04.java) | 모든 아나그램 찾기 |
 | [P04_05](./hash/P04_05.java) |  K번째 큰 수   |
+
+### Stack, Queue
+|                 파일명                  |     문제 간략 소개     |
+|:------------------------------------:|:----------------:|
+| [P05_01](./stack_queue/P05_01.java)  |      올바른 괄호      |
+| [P05_02](./stack_queue/P05_02.java)  |     괄호 문자 제거     |
+| [P05_03](./stack_queue/P05_03.java)  |  크레인 인형뽑기(카카오)   |
+| [P05_04](./stack_queue/P05_04.java)  | 후위식 연산 (postfix) |
+| [P05_05](./stack_queue/P05_05.java)  |       쇠막대기       |
+| [P05_06](./stack_queue/P05_06.java)  |      공주 구하기      |
+| [P05_07](./stack_queue/P05_07.java)  |     교육 과정 설계     |
+| [P05_08](./stack_queue/P05_08.java)  |       응급실        |
