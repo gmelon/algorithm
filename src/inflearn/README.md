@@ -1,4 +1,5 @@
 ## 인프런 알고리즘 [강의](https://www.inflearn.com/course/%EC%9E%90%EB%B0%94-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4-%EC%BD%94%ED%85%8C%EB%8C%80%EB%B9%84) 문제 풀이
+
 ### 문자열 조작
 |              파일명               |      문제 간략 소개       |
 |:------------------------------:|:-------------------:|
@@ -60,3 +61,12 @@
 | [P05_06](./stack_queue/P05_06.java)  |      공주 구하기      |
 | [P05_07](./stack_queue/P05_07.java)  |     교육 과정 설계     |
 | [P05_08](./stack_queue/P05_08.java)  |       응급실        |
+
+### Sorting, Searching
+|                    파일명                    |      문제 간략 소개      |
+|:-----------------------------------------:|:------------------:|
+| [P06_01](./sorting_searching/P06_01.java) |       선택 정렬        |
+| [P06_02](./sorting_searching/P06_02.java) |       버블 정렬        |
+| [P06_03](./sorting_searching/P06_03.java) |       삽입 정렬        |
+| [P06_04](./sorting_searching/P06_04.java) | LRU(캐시, 카카오 기출 변형) |
+| [P06_05](./sorting_searching/P06_05.java) |       중복 확인        |
