@@ -23,7 +23,7 @@ public class P05_03 {
         Stack<Integer> bucket = new Stack<>();
         for (int i : moves) {
             if (!stacks.get(i-1).isEmpty()){
-                int newItem = stacks.get(i - 1).pop();
+                int newItem = stacks.get(i-1).pop();
                 if (!bucket.isEmpty() && bucket.peek() == newItem) {
                     bucket.pop();
                     answer += 2;
