@@ -11,12 +11,17 @@ public class P06_08 {
 
         // 이분 검색 시작
         int lt = 0, rt = arr.length - 1;
-        while (lt != rt) {
-            int tmp = (lt + rt) / 2;
-            if (m <= arr[tmp]) {
-                rt = tmp;
+        while (lt < rt) { // m을 찾거나 범위내에 없을 경우 lt == rt
+            int mid = (lt + rt) / 2;
+            // mid == m 일 경우 계속 이분탐색 진행하지 않고 바로 리턴하도록하여 효율 증가
+            if (arr[mid] == m) {
+                lt = mid;
+                break;
+            }
+            if (m < arr[mid]) {
+                rt = mid - 1;
             } else {
-                lt = tmp + 1;
+                lt = mid + 1;
             }
         }
         return lt + 1; // 문제의 idx가 1부터 시작
