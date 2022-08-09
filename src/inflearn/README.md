@@ -63,10 +63,13 @@
 | [P05_08](./stack_queue/P05_08.java)  |       응급실        |
 
 ### Sorting, Searching
-|                    파일명                    |      문제 간략 소개      |
-|:-----------------------------------------:|:------------------:|
-| [P06_01](./sorting_searching/P06_01.java) |       선택 정렬        |
-| [P06_02](./sorting_searching/P06_02.java) |       버블 정렬        |
-| [P06_03](./sorting_searching/P06_03.java) |       삽입 정렬        |
-| [P06_04](./sorting_searching/P06_04.java) | LRU(캐시, 카카오 기출 변형) |
-| [P06_05](./sorting_searching/P06_05.java) |       중복 확인        |
+|                    파일명                    |       문제 간략 소개       |
+|:-----------------------------------------:|:--------------------:|
+| [P06_01](./sorting_searching/P06_01.java) |        선택 정렬         |
+| [P06_02](./sorting_searching/P06_02.java) |        버블 정렬         |
+| [P06_03](./sorting_searching/P06_03.java) |        삽입 정렬         |
+| [P06_04](./sorting_searching/P06_04.java) |  LRU(캐시, 카카오 기출 변형)  |
+| [P06_05](./sorting_searching/P06_05.java) |        중복 확인         |
+| [P06_06](./sorting_searching/P06_06.java) | 장난꾸러기 (줄서기 + 순서 바꾸기) |
+| [P06_07](./sorting_searching/P06_07.java) |        좌표 정렬         |
+| [P06_08](./sorting_searching/P06_08.java) |        이분 검색         |
