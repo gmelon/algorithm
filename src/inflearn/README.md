@@ -73,3 +73,5 @@
 | [P06_06](./sorting_searching/P06_06.java) | 장난꾸러기 (줄서기 + 순서 바꾸기) |
 | [P06_07](./sorting_searching/P06_07.java) |        좌표 정렬         |
 | [P06_08](./sorting_searching/P06_08.java) |        이분 검색         |
+| [P06_09](./sorting_searching/P06_09.java) |  결정 알고리즘 1 (뮤직비디오)   |
+| [P06_10](./sorting_searching/P06_10.java) |   결정 알고리즘 2 (마구간)    |
