@@ -79,4 +79,6 @@
 ### Recursive, Tree, Graph(DFS, BFS 기초)
 |                    파일명                     |    문제 간략 소개    |
 |:------------------------------------------:|:--------------:|
-| [P07_01](./recursive_tree_graph/P07_01.md) | 재귀 함수 (스택 프레임) |
+| [P07_01](./recursive_tree_graph/P07_01.md) | 재귀 개요 (스택 프레임) |
+| [P07_02](./recursive_tree_graph/P07_02.md) |      이진수       |
+| [P07_03](./recursive_tree_graph/P07_03.md) |      팩토리얼      |
