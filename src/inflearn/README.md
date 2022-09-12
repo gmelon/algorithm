@@ -93,3 +93,11 @@
 | [P07_12](./recursive_tree_graph/P07_12.md) |        경로 탐색 (DFS)         |
 | [P07_13](./recursive_tree_graph/P07_13.md) | 경로 탐색 (인접 리스트, ArrayList)  |
 | [P07_14](./recursive_tree_graph/P07_14.md) |       그래프 최단거리 (BFS)       |
+
+### DFS, BFS 활용
+|               파일명               |     문제 간략 소개     |
+|:-------------------------------:|:----------------:|
+| [P08_01](./dfs_bfs/P08_01.java) | 합이 같은 부분집합 (DFS) |
+| [P08_02](./dfs_bfs/P08_02.java) |   바둑이 승차 (DFS)   |
+| [P08_03](./dfs_bfs/P08_03.java) | 최대 점수 구하기 (DFS)  |
+|  [P08_04](./dfs_bfs/P08_04.md)  |    중복 순영 구하기     |
