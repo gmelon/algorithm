@@ -30,6 +30,7 @@ public class P08_08 {
 
     public static void DFS(int[] permutation, int index, int n) {
         if (!answer.equals("")) {
+            // 답을 찾으면 더 이상 재귀 진행 X
             return;
         }
         if (index >= n) {
@@ -47,7 +48,7 @@ public class P08_08 {
                     check[i] = true;
                     permutation[index] = i+1;
                     DFS(permutation, index + 1, n);
-                    check[i] = false;
+                    check[i] = false; // DFS 이후에 check를 풀어주어야 다시 해당 숫자가 순열을 만드는데 사용될 수 있음
                 }
             }
         }
