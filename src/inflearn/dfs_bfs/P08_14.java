@@ -21,19 +21,24 @@ public class P08_14 {
     private static List<Point> pizzaStore;
     private static int[][] board;
     private static int[] combi;
+    private static int answer = Integer.MAX_VALUE;
 
     public static void solution(int curCombiIndex, int curValue) {
         if (curCombiIndex == combi.length) {
             // ((모든 집과 피자집의 거리) 중 최소 값)의 합 중 최소값을 구함
+            int cityPizzaDistance = 0;
             for (Point h : home) {
-                int distanceWithPizzaStore = 0;
-                for (int i = 0; i < ; i++) {
-                    
+                int oneHousepizzaDistance = Integer.MAX_VALUE;
+                for (int c : combi) {
+                    oneHousepizzaDistance = Math.min((Math.abs(h.x - pizzaStore.get(c).x) + Math.abs(h.y - pizzaStore.get(c).y)),
+                        oneHousepizzaDistance);
                 }
+                cityPizzaDistance += oneHousepizzaDistance;
             }
+            answer = Math.min(answer, cityPizzaDistance);
         }
         else {
-            for (int i = curValue; i < combi.length; i++) {
+            for (int i = curValue; i < pizzaStore.size(); i++) {
                 combi[curCombiIndex] = i;
                 solution(curCombiIndex + 1, curValue + 1);
             }
@@ -62,5 +67,6 @@ public class P08_14 {
             }
         }
         solution(0, 0);
+        System.out.println(answer);
     }
 }
