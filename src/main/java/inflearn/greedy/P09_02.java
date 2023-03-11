@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import org.jetbrains.annotations.NotNull;
 
-public class P09_03 {
+public class P09_02 {
 
     public static class Meeting implements Comparable<Meeting>{
 
@@ -19,7 +18,7 @@ public class P09_03 {
         }
 
         @Override
-        public int compareTo(@NotNull Meeting o) {
+        public int compareTo( Meeting o) {
             if (this.endTime == o.endTime) {
                 return this.startTime - o.startTime;
             }

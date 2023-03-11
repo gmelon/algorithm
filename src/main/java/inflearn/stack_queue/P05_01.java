@@ -1,6 +1,5 @@
 package inflearn.stack_queue;
 
-import java.util.EmptyStackException;
 import java.util.Scanner;
 import java.util.Stack;
 
