@@ -6,10 +6,19 @@ import java.util.List;
 public class LinkedList<T> {
 
     private int size;
-    private collections.linkedlist.Node<T> head;
+    private Node<T> head;
 
     public LinkedList() {
         this.size = 0;
+    }
+
+    @SafeVarargs
+    public static <T> LinkedList<T> of(T... newItems) {
+        LinkedList<T> linkedList = new LinkedList<>();
+        for (T newItem : newItems) {
+            linkedList.addLast(newItem);
+        }
+        return linkedList;
     }
 
     /**
@@ -38,7 +47,7 @@ public class LinkedList<T> {
      * set
      */
     public void set(int index, T newItem) {
-        collections.linkedlist.Node<T> targetNode = getTargetNode(index);
+        Node<T> targetNode = getTargetNode(index);
         targetNode.setItem(newItem);
     }
 
@@ -58,13 +67,21 @@ public class LinkedList<T> {
             throw new IllegalArgumentException("해당 index에는 원소를 추가할 수 없습니다");
         }
 
-        collections.linkedlist.Node<T> beforeNode = getTargetNode(index - 1);
+        if (index == 0) {
+            Node<T> lastHead = this.head;
+            this.head = new Node<>(newItem, lastHead);
+            size++;
+            return;
+        }
+
+        Node<T> beforeNode = getTargetNode(index - 1);
         Node<T> targetNode = null;
         if (index < size) {
              targetNode = getTargetNode(index);
         }
 
         beforeNode.setNext(new Node<>(newItem, targetNode));
+        size++;
     }
 
     /**
@@ -75,6 +92,8 @@ public class LinkedList<T> {
         Node<T> targetNode = getTargetNode(index);
 
         beforeNode.setNext(targetNode.getNext());
+        size--;
+
         return targetNode.getItem();
     }
 
@@ -91,7 +110,7 @@ public class LinkedList<T> {
 
         Node<T> currentNode = head;
         for (int i = 0; i < index; i++) {
-            head = head.getNext();
+            currentNode = currentNode.getNext();
         }
         return currentNode;
     }
