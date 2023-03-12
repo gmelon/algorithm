@@ -25,6 +25,7 @@ public class LinkedList<T> {
      * clear
      */
     public void clear() {
+        size = 0;
         this.head = null;
     }
 

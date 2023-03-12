@@ -78,6 +78,16 @@ class LinkedListTest {
     }
 
     @Test
+    void 원소_전체_삭제() {
+        linkedList.addLast(0);
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.clear();
+
+        assertThat(linkedList.getAll()).isEmpty();
+    }
+
+    @Test
     void of() {
         assertThat(LinkedList.of(1, 2, 3, 4, 5).getAll())
             .containsExactly(1, 2, 3, 4, 5);
