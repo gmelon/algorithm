@@ -92,4 +92,12 @@ class LinkedListTest {
         assertThat(LinkedList.of(1, 2, 3, 4, 5).getAll())
             .containsExactly(1, 2, 3, 4, 5);
     }
+
+    @Test
+    void name() {
+        String s = "asdas";
+        for (char c : s.toCharArray()) {
+
+        }
+    }
 }
