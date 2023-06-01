@@ -11,10 +11,10 @@ public class N4_1이될때까지 {
         while (N >= K) {
             answer += N % K; // 1만큼 뺄 수
             N -= N % K; // N에서 빼야되는 만큼 1을 빼주기
-            if (N < K) {
-                // 더 이상 나눌 수 없으면 break
-                break;
-            }
+//            if (N < K) {
+//                // 더 이상 나눌 수 없으면 break
+//                break;
+//            }
             N /= K;
             answer++;
         }
