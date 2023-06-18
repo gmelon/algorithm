@@ -5,6 +5,7 @@ import java.util.*;
 public class N4_게임개발 {
 
     // 북, 동, 남, 서 방향
+    // dx, dy 선언 순서에 따라 탐색 우선순위가 정해짐
     public static int[] dx = {-1, 0, 1, 0};
     public static int[] dy = {0, 1, 0, -1};
 
