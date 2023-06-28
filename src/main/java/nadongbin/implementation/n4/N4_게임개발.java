@@ -1,93 +1,124 @@
 package nadongbin.implementation.n4;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class N4_게임개발 {
 
-    // 북, 동, 남, 서 방향
-    // dx, dy 선언 순서에 따라 탐색 우선순위가 정해짐
-    public static int[] dx = {-1, 0, 1, 0};
-    public static int[] dy = {0, 1, 0, -1};
+    static class Player {
 
-    // 왼쪽으로 회전
-    public static int turnLeft(int direction) {
-        direction -= 1;
-        if (direction == -1) {
-            return 3;
+        int x, y;
+        int direction;
+
+        public Player(int x, int y, int direction) {
+            this.x = x;
+            this.y = y;
+            this.direction = direction;
         }
-        return direction;
+
+        // 0:북, 1:동, 2:남, 3:서
+        private final int[] dx = {-1, 0, 1, 0};
+        private final int[] dy = {0, 1, 0, -1};
+
+        public int nextX() {
+            return x + dx[nextDirection()];
+        }
+
+        public int nextY() {
+            return y + dy[nextDirection()];
+        }
+
+        public int backX() {
+            return x - dx[direction];
+        }
+
+        public int backY() {
+            return y - dy[direction];
+        }
+
+        public void move(int x, int y, boolean changeDirection) {
+            this.x = x;
+            this.y = y;
+            if (changeDirection) {
+                this.direction = nextDirection();
+            }
+        }
+
+        private int nextDirection() {
+            int direction = this.direction - 1;
+            if (direction == -1) {
+                return 3;
+            }
+            return direction;
+        }
     }
+
+    /*
+        4 4
+        1 1 0
+        1 1 1 1
+        1 0 0 1
+        1 1 0 1
+        1 1 1 1
+     */
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+        int N = sc.nextInt(); // 세로 크기
+        int M = sc.nextInt(); // 가로 크기
 
-        // 캐릭터의 초기 위치
-        int currentX = sc.nextInt();
-        int currentY = sc.nextInt();
+        // 초기 플레이어 정보
+        Player currentPosition = new Player(sc.nextInt(), sc.nextInt(), sc.nextInt());
 
-        int direction = sc.nextInt(); // 캐릭터의 초기 방향
-        int[][] visited = new int[50][50];
-        visited[currentX][currentY] = 1; // 현재 좌표 방문 처리
-
-        // 맵 정보 입력
-        int[][] map = new int[50][50];
+        int[][] map = new int[N][M];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 map[i][j] = sc.nextInt();
             }
         }
 
-        // 시뮬레이션 시작
-        int visitedCount = 1;
-        int turnAttempt = 0;
+        sc.close();
+
+        System.out.println(solution(N, M, currentPosition, map));
+    }
+
+    public static int solution(final int N, final int M, final Player currentPosition, final int[][] map) {
+        boolean[][] visited = new boolean[N][M];
+        visited[currentPosition.x][currentPosition.y] = true;
+
+        int turnCount = 0;
+        int moveCount = 0;
         while (true) {
-            // 왼쪽으로 회전
-            direction = turnLeft(direction);
-            // 회전 후 이동될 좌표 계산
-            int nextX = currentX + dx[direction];
-            int nextY = currentY + dy[direction];
-
-            // 회전한 이후 정면에 가보지 않은 칸이 존재하는 경우 이동
-            /**
-             * visited == 0 -> 방문 X
-             * map == 0 -> 육지
-             */
-            if (visited[nextX][nextY] == 0 && map[nextX][nextY] == 0) {
-                // 이동 처리
-                currentX = nextX;
-                currentY = nextY;
-                visited[nextX][nextY] = 1;
-
-                visitedCount += 1; // 방문 횟수 카운트
-                turnAttempt = 0; // 방문 시도 횟수 초기화
-                continue;
-            } else {
-                //
-                turnAttempt += 1;
-            }
-
-            // 4번 시도 후에도 이동이 불가능한 경우 (4방향이 모두 바다거나 방문한 좌표)
-            if (turnAttempt == 4) {
-                // 뒤가 이동 가능한 좌표인지 확인
-                nextX = currentX - dx[direction];
-                nextY = currentY - dy[direction];
-                if (map[nextX][nextY] == 0) { // 육지이면
-                    currentX = nextX;
-                    currentY = nextY;
-
-                    turnAttempt = 0;
-                }
-                else {
-                    // 뒤가 바다인 경우 시뮬레이션 종료
+            if (turnCount == 4) {
+                int nextX = currentPosition.backX();
+                int nextY = currentPosition.backY();
+                if (checkRange(nextX, nextY, N, M) && map[nextX][nextY] == 1) { // 바다
                     break;
+                }
+                currentPosition.move(nextX, nextY, false);
+                moveCount++;
+                turnCount = 0;
+            }
+            else {
+                int nextX = currentPosition.nextX();
+                int nextY = currentPosition.nextY();
+                if (checkRange(nextX, nextY, N, M) && map[nextX][nextY] == 0 && !visited[nextX][nextY]) { // 육지 && 방문X
+                    currentPosition.move(nextX, nextY, true);
+                    visited[nextX][nextY] = true;
+                    moveCount++;
+                    turnCount = 0;
+                } else {
+                    currentPosition.move(currentPosition.x, currentPosition.y, true);
+                    turnCount++;
                 }
             }
         }
-
-        System.out.println(visitedCount);
+        return moveCount;
     }
+
+    public static boolean checkRange(int x, int y, int N, int M) {
+        return x >= 0 && x < N && y >= 0 && y < M;
+    }
+
 
 }
