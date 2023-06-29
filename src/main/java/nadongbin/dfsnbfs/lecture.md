@@ -218,7 +218,7 @@ public static void bfs(List<List<Integer>> graph) {
     Queue<Integer> queue = new LinkedList<>();
     boolean[] visited = new boolean[9]; // 1 ~ 8
 
-		// 탐색 시작 노드 지정
+    // 탐색 시작 노드 지정
     queue.offer(1);
     visited[1] = true;
 
