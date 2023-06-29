@@ -178,7 +178,7 @@ public static void dfsStack(List<List<Integer>> graph) {
     Stack<Integer> stack = new Stack<>();
     boolean[] visited = new boolean[9];
 
-		// 탐색 시작 노드 지정
+    // 탐색 시작 노드 지정
     stack.push(1);
     visited[1] = true;
 
