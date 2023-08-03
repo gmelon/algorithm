@@ -23,12 +23,28 @@ public class 부품찾기 {
         Arrays.sort(arrN); // 오름차순 정렬
 
         for (int m : arrM) {
-            int result = Arrays.binarySearch(arrN, m);
+            int result = recursiveBinarySearch(arrN, m, 0, arrN.length - 1);
             if (result >= 0) {
                 System.out.print("yes ");
             } else {
                 System.out.print("no ");
             }
+        }
+    }
+
+    public static int recursiveBinarySearch(int[] arr, int target, int start, int end) {
+        if (start > end) {
+            return -1;
+        }
+        int mid = (start + end) / 2;
+
+        if (arr[mid] == target) {
+            return mid;
+        }
+        if (arr[mid] < target) {
+            return recursiveBinarySearch(arr, target, mid + 1, end);
+        } else {
+            return recursiveBinarySearch(arr, target, start, mid - 1);
         }
     }
 
