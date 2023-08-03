@@ -13,4 +13,4 @@
 
 
 ## 백준 + 프로그래머스 문제
-1. [중량제한](https://github.com/gmelon/algorithm_problems/blob/324c861c7795e4463559d79fd3c5e4ce3937adf6/%EB%B0%B1%EC%A4%80/Gold/1939.%E2%80%85%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C/%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C.java)
+1. [중량제한 (1939)](https://github.com/gmelon/algorithm_problems/blob/324c861c7795e4463559d79fd3c5e4ce3937adf6/%EB%B0%B1%EC%A4%80/Gold/1939.%E2%80%85%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C/%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C.java)
