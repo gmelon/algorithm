@@ -1,6 +1,5 @@
 package nadongbin.dp.n7;
 
-import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class 못생긴_수 {
@@ -11,24 +10,28 @@ public class 못생긴_수 {
         sc.close();
 
         // 풀이 시작
-        PriorityQueue<Integer> numbers = new PriorityQueue<>();
-        boolean[] visited = new boolean[100000];
-        int[] primeNumbers = {2, 3, 5};
+        int[] dp = new int[1001];
+        dp[1] = 1;
 
-        numbers.offer(1);
-        visited[1] = true;
+        int current2Index = 1;
+        int current3Index = 1;
+        int current5Index = 1;
 
-        for (int i = 0; i < n - 1; i++) {
-            Integer curNumber = numbers.poll();
-            for (int primeNumber : primeNumbers) {
-                int nextNumber = curNumber * primeNumber;
-                if (!visited[nextNumber]) {
-                    numbers.offer(nextNumber);
-                    visited[nextNumber] = true;
-                }
+        for (int i = 2; i <= n; i++) {
+            dp[i] = Math.min(dp[current2Index] * 2, Math.min(dp[current3Index] * 3, dp[current5Index] * 5));
+
+            if (dp[i] == dp[current2Index] * 2) {
+                // 현재 최소값이 dp[current2Index] * 2 이면, current2Index를 이동
+                current2Index++;
+            }
+            if (dp[i] == dp[current3Index] * 3) {
+                current3Index++;
+            }
+            if (dp[i] == dp[current5Index] * 5) {
+                current5Index++;
             }
         }
-        System.out.println(numbers.poll());
-    }
 
+        System.out.println(dp[n]);
+    }
 }

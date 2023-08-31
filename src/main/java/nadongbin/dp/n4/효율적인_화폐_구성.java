@@ -20,7 +20,7 @@ public class 효율적인_화폐_구성 {
         int[] dp = new int[M + 1];
         // 초기화
         for (int i = 1; i <= M; i++) {
-            dp[i] = 10_001;
+            dp[i] = 10_001; // 구성 불가를 의미함
         }
 
         for (int i = 1; i <= M; i++) {
