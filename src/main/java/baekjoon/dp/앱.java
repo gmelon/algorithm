@@ -1,15 +1,10 @@
-package baekjoon;
+package baekjoon.dp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class 앱 {
-
-    static class Result {
-        int currentMemories;
-        int currentCost;
-    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -26,9 +21,20 @@ public class 앱 {
         sc.close();
 
         // 풀이 시작
-        int[][] dp = new int[N][2]; // [프로세스번호][사용여부 0,1]
+        int[] dp = new int[100 * 100 + 1]; // dp[c] : c 이상의 비용으로 만들 수 있는 메모리의 최대값
 
+        for (int i = 0; i < N; i++) {
+            for (int j = dp.length - 1; j >= costs.get(i) ; j--) {
+                dp[j] = Math.max(dp[j], dp[j - costs.get(i)] + memories.get(i));
+            }
+        }
 
+        for (int i = 0; i < dp.length; i++) {
+            if (dp[i] >= M) {
+                System.out.println(i);
+                return;
+            }
+        }
     }
 
 }
