@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.two_pointer;
 
 import java.util.Scanner;
 

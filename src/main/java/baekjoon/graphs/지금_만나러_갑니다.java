@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.graphs;
 
 import java.util.Scanner;
 
