@@ -9,8 +9,10 @@ public class 감시 {
     static final int EMPTY = 0; // 빈공간
     static final int WALL = 6; // 벽
 
-    static int[] dx = {1, -1, 0, 0};
-    static int[] dy = {0, 0, 1, -1};
+    // 상, 우, 하, 좌
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static int[] rorateCounts = {0, 4, 2, 4, 4, 1};
 
     static int minZeroCount = Integer.MAX_VALUE;
 
@@ -26,17 +28,6 @@ public class 감시 {
             this.y = y;
             this.type = type;
             this.direction = direction;
-        }
-
-        public Camera(Camera camera) {
-            this.x = camera.x;
-            this.y = camera.y;
-            this.type = camera.type;
-            this.direction = camera.direction;
-        }
-
-        public void rotateDirection() {
-            direction = (direction + 1) % 4;
         }
     }
 
@@ -57,9 +48,7 @@ public class 감시 {
         }
         sc.close();
 
-        // 풀이 시작
         find(0, arr);
-
         System.out.println(minZeroCount);
     }
 
@@ -79,11 +68,62 @@ public class 감시 {
         }
 
         // 현재 카메라를 4방향으로 돌리면서 맵 변경
+        Camera current = cameras.get(currentCameraIndex);
+        int rotateCount = rorateCounts[current.type];
+        for (int i = 0; i < rotateCount; i++) {
+            // 맵 복제
+            int[][] copiedArr = deepCopy(arr);
+            // 각 카메라의 방향에 따라 맵 탐색 진행
+            if (current.type == 1) {
+                apply(copiedArr, current.x, current.y, dx[current.direction], dy[current.direction]);
+            } else if (current.type == 2) {
+                apply(copiedArr, current.x, current.y, dx[current.direction], dy[current.direction]);
+                apply(copiedArr, current.x, current.y, dx[current.direction + 2], dy[current.direction + 2]);
+            } else if (current.type == 3) {
+                apply(copiedArr, current.x, current.y, dx[current.direction], dy[current.direction]);
+                apply(copiedArr, current.x, current.y, dx[(current.direction + 1) % 4], dy[(current.direction + 1) % 4]);
+            } else if (current.type == 4) {
+                apply(copiedArr, current.x, current.y, dx[current.direction], dy[current.direction]);
+                apply(copiedArr, current.x, current.y, dx[(current.direction + 1) % 4], dy[(current.direction + 1) % 4]);
+                apply(copiedArr, current.x, current.y, dx[(current.direction + 2) % 4], dy[(current.direction + 2) % 4]);
+            } else if (current.type == 5) {
+                apply(copiedArr, current.x, current.y, dx[current.direction], dy[current.direction]);
+                apply(copiedArr, current.x, current.y, dx[current.direction + 1], dy[current.direction + 1]);
+                apply(copiedArr, current.x, current.y, dx[current.direction + 2], dy[current.direction + 2]);
+                apply(copiedArr, current.x, current.y, dx[current.direction + 3], dy[current.direction + 3]);
+            }
 
+            // 탐색된 후 다음번 카메라 호출
+            find(currentCameraIndex + 1, copiedArr);
 
-        // 각 방향에 대하여
-        // 변경된 맵을 복사하고 다음 카메라 호출
-        // 4방향이 모두 종료되면, 현재 카메라 위치 원복 (이전 호출에 대비)
+            // 카메라 방향 돌리기
+            cameras.get(currentCameraIndex).direction += 1;
+        }
+        // 모든 방향 탐색 종료 시, 현재 카메라 위치 원복 (이전 호출에 대비)
+        cameras.get(currentCameraIndex).direction = 0;
     }
 
+    static void apply(int[][] arr, int curX, int curY, int dx, int dy) {
+        int nX = curX + dx;
+        int nY = curY + dy;
+
+        while (nX >= 0 && nX < arr.length && nY >= 0 && nY < arr[0].length) {
+            if (arr[nX][nY] == WALL) {
+                break;
+            }
+            if (arr[nX][nY] == 0) {
+                arr[nX][nY] = -1;
+            }
+            nX += dx;
+            nY += dy;
+        }
+    }
+
+    static int[][] deepCopy(int[][] arr) {
+        int[][] copiedArr = new int[arr.length][];
+        for (int i = 0; i < arr.length; i++) {
+            copiedArr[i] = arr[i].clone();
+        }
+        return copiedArr;
+    }
 }
