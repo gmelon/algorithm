@@ -1,97 +1,97 @@
 package swea;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 class Solution {
 
-    private static final int EXPONENT1 = 31;
-    private static final int EXPONENT2 = 37;
-    private static final int EXPONENT3 = 41;
+    private final static int CMD_INIT = 1;
+    private final static int CMD_HIRE = 2;
+    private final static int CMD_FIRE = 3;
+    private final static int CMD_UPDATE_SOLDIER = 4;
+    private final static int CMD_UPDATE_TEAM = 5;
+    private final static int CMD_BEST_SOLDIER = 6;
+
+    private final static UserSolution usersolution = new UserSolution();
+
+    private static boolean run(BufferedReader br) throws Exception {
+        StringTokenizer st;
+
+        int numQuery;
+
+        int mID, mTeam, mScore, mChangeScore;
+
+        int userAns, ans;
+
+        boolean isCorrect = false;
+
+        numQuery = Integer.parseInt(br.readLine());
+
+        for (int q = 0; q < numQuery; ++q) {
+            st = new StringTokenizer(br.readLine(), " ");
+
+            int cmd;
+            cmd = Integer.parseInt(st.nextToken());
+
+            switch (cmd) {
+                case CMD_INIT:
+                    usersolution.init();
+                    isCorrect = true;
+                    break;
+                case CMD_HIRE:
+                    mID = Integer.parseInt(st.nextToken());
+                    mTeam = Integer.parseInt(st.nextToken());
+                    mScore = Integer.parseInt(st.nextToken());
+                    usersolution.hire(mID, mTeam, mScore);
+                    break;
+                case CMD_FIRE:
+                    mID = Integer.parseInt(st.nextToken());
+                    usersolution.fire(mID);
+                    break;
+                case CMD_UPDATE_SOLDIER:
+                    mID = Integer.parseInt(st.nextToken());
+                    mScore = Integer.parseInt(st.nextToken());
+                    usersolution.updateSoldier(mID, mScore);
+                    break;
+                case CMD_UPDATE_TEAM:
+                    mTeam = Integer.parseInt(st.nextToken());
+                    mChangeScore = Integer.parseInt(st.nextToken());
+                    usersolution.updateTeam(mTeam, mChangeScore);
+                    break;
+                case CMD_BEST_SOLDIER:
+                    mTeam = Integer.parseInt(st.nextToken());
+                    userAns = usersolution.bestSoldier(mTeam);
+                    ans = Integer.parseInt(st.nextToken());
+                    if (userAns != ans) {
+                        isCorrect = false;
+                    }
+                    break;
+                default:
+                    isCorrect = false;
+                    break;
+            }
+        }
+
+        return isCorrect;
+    }
 
     public static void main(String[] args) throws Exception {
+        int TC, MARK;
+
+        //System.setIn(new java.io.FileInputStream("res/sample_input.txt"));
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        int T = Integer.parseInt(br.readLine());
+        TC = Integer.parseInt(st.nextToken());
+        MARK = Integer.parseInt(st.nextToken());
 
-        for (int testCase = 1; testCase <= T; testCase++) {
-            String B = br.readLine();
-            String S = br.readLine();
-
-            sb.append('#').append(testCase).append(' ').append(getCount(B, S)).append('\n');
+        for (int testcase = 1; testcase <= TC; ++testcase) {
+            int score = run(br) ? MARK : 0;
+            System.out.println("#" + testcase + " " + score);
         }
-
-        bw.write(sb.toString());
-        bw.flush();
 
         br.close();
-        bw.close();
-    }
-
-    // Rabin–Karp algorithm
-    private static int getCount(String string, String pattern) {
-        int count = 0;
-
-        int stringLength = string.length();
-        int patternLength = pattern.length();
-
-        int stringHash1 = 0;
-        int patternHash1 = 0;
-
-        int stringHash2 = 0;
-        int patternHash2 = 0;
-
-        int stringHash3 = 0;
-        int patternHash3 = 0;
-
-        int power1 = 1;
-        int power2 = 1;
-        int power3 = 1;
-
-        for (int i = 0; i <= stringLength - patternLength; i++) {  // Window의 시작 위치
-            // string[i ... i + patternLength - 1] 이 pattern과 같은 지 확인
-            if (i == 0) {
-                for (int j = 0; j < patternLength; j++) {
-                    stringHash1 += hash(string.charAt(patternLength - 1 - j), power1);
-                    patternHash1 += hash(pattern.charAt(patternLength - 1 - j), power1);
-
-                    stringHash2 += hash(string.charAt(patternLength - 1 - j), power2);
-                    patternHash2 += hash(pattern.charAt(patternLength - 1 - j), power2);
-
-                    stringHash3 += hash(string.charAt(patternLength - 1 - j), power3);
-                    patternHash3 += hash(pattern.charAt(patternLength - 1 - j), power3);
-
-                    if (j < patternLength - 1) {
-                        power1 *= EXPONENT1;
-                        power2 *= EXPONENT2;
-                        power3 *= EXPONENT3;
-                    }
-                }
-            } else {
-                stringHash1 = EXPONENT1 * (stringHash1 - hash(string.charAt(i - 1), power1))
-                    + string.charAt(patternLength - 1 + i);
-
-                stringHash2 = EXPONENT2 * (stringHash2 - hash(string.charAt(i - 1), power2))
-                    + string.charAt(patternLength - 1 + i);
-
-                stringHash3 = EXPONENT3 * (stringHash3 - hash(string.charAt(i - 1), power3))
-                    + string.charAt(patternLength - 1 + i);
-            }
-
-            if (stringHash1 == patternHash1 && stringHash2 == patternHash2
-                && stringHash3 == patternHash3) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    private static int hash(int value, int power) {
-        return value * power;
     }
 }

@@ -1,114 +1,124 @@
 package swea;
 
-import java.util.HashMap;
-
 class UserSolution {
 
-    final int MAX_MAKE_LIST = 10;
-    final int MAX_LENGTH = 200000;
-    final int MAX_ADDRESS = 6000;
-    final int MAX_CHANGE = 110000;
-    int initNumber;     // 원본 배열의 번호
-    int[][] initValue;  // 원본 배열 (makeList 당시) 정보를 그대로 저장하는 배열
+    static Node[][] heads;
+    static Node[][] tails;
+    static int[] currentVersion;
+    static int[] teamIds;
 
-    int addressNumber;  // 새로운 배열의 번호 (마지막 배열 번호 + 1)
-    HashMap<String, Integer> address;  // 배열 이름 -> 원본 배열 번호 mapping
+    static class Node {
 
-    int changeNumber;  // 현재까지 발생한 "변화 event" 개수 (makeList, copyList, updateElement 모두 포함)
-    Pair[] changeLog;  // 현재까지 발생한 "변화 event" 정보
-    // makeList         : (-1, 원본 배열 번호)
-    // copyList         : (-1, -1) 정보 추가하기. (deepcopy를 의미함)
-    // updateElement    : (인덱스, 값) ; 인덱스의 값을 변경했다.
-    int[] lastChange;  // lastChange[i] := i번 원본 배열의 마지막 변화 event 번호
-    int[] prevChange;  // prevChange[i] := i번 변화의 직전 변화 event 번호
+        int id, version;
+        Node next;
 
-    void init() {
-        // 원본 배열 초기화
-        initNumber = 0;
-        initValue = new int[MAX_MAKE_LIST + 1][MAX_LENGTH + 1];
-
-        // 전체 배열 초기화
-        addressNumber = 0;
-        address = new HashMap<>();
-
-        // 변화 event 정보 초기화
-        changeNumber = 0;
-        changeLog = new Pair[MAX_CHANGE + 1];
-        lastChange = new int[MAX_ADDRESS + 1];
-        prevChange = new int[MAX_CHANGE + 1];
-    }
-
-    String getName(char[] name) {  // char[] -> String 변환 함수
-        String x = "";
-        for (int i = 0; name[i] != 0; i++) {
-            x += name[i];
-        }
-        return x;
-    }
-
-    void makeList(char[] _mName, int mLength, int[] mListValue) {
-        String mName = getName(_mName);
-        System.arraycopy(mListValue, 0, initValue[initNumber], 0, mLength);  // initNumber 위치에 원본 배열에 저장하기
-        initNumber++;
-
-        address.put(mName, addressNumber);  // mName 이름의 배열을 생성해줍니다.
-        addressNumber++;
-
-        changeLog[changeNumber] = new Pair(-1, initNumber - 1);
-        prevChange[changeNumber] = -1;
-        lastChange[address.get(mName)] = changeNumber;
-        changeNumber++;
-    }
-
-    void copyList(char[] _mDest, char[] _mSrc, boolean mCopy) {
-        String mDest = getName(_mDest);
-        String mSrc = getName(_mSrc);
-        if (mCopy) {
-            // 새로운 번호 할당
-            address.put(mDest, addressNumber);
-            addressNumber++;
-
-            // Tree 구성
-            changeLog[changeNumber] = new Pair(-1, -1);
-            prevChange[changeNumber] = lastChange[address.get(mSrc)];
-            lastChange[address.get(mDest)] = changeNumber;
-            changeNumber++;
-        } else {
-            address.put(mDest, address.get(mSrc));
+        public Node(int id, int version, Node next) {
+            this.id = id;
+            this.version = version;
+            this.next = next;
         }
     }
 
-    void updateElement(char[] _mName, int mIndex, int mValue) {
-        String mName = getName(_mName);
-        changeLog[changeNumber] = new Pair(mIndex, mValue);
-        prevChange[changeNumber] = lastChange[address.get(mName)];
-        lastChange[address.get(mName)] = changeNumber;
-        changeNumber++;
+    public void init() {
+        // table[i][j] -> i번째 팀에서 평판이 j인 병사 리스트
+        heads = new Node[6][6];
+        tails = new Node[6][6];
+        // currentVersion[i] = id가 i인 병사의 최신 버전
+        currentVersion = new int[100_001];
+        // 병사들의 teamId를 기록
+        teamIds = new int[100_001];
     }
 
-    int element(char[] _mName, int mIndex) {
-        String mName = getName(_mName);
-        int c = lastChange[address.get(mName)];
-        while (true) {
-            if (prevChange[c] == -1) { // 이전 변화가 없음 -> 루트 노드다.
-                // 원본 배열에서 mIndex 값 가져오자.
-                return initValue[changeLog[c].second][mIndex];
+    // 병사를 고용한다
+    // 100_000번 호출
+    public void hire(int id, int teamId, int score) {
+        currentVersion[id]++;
+        teamIds[id] = teamId;
+
+        Node current = new Node(id, currentVersion[id], heads[teamId][score]);
+        heads[teamId][score] = current;
+
+        if (tails[teamId][score] == null) {
+            tails[teamId][score] = heads[teamId][score];
+        }
+    }
+
+    // 병사를 해고한다
+    // 100_000번 호출
+    public void fire(int id) {
+        // 병사의 id를 증가시켜서 기존 병사 리스트의 node를 무력화 시킨다
+        currentVersion[id]++;
+    }
+
+    // id 병사의 평판 점수를 score로 변경한다
+    // 100_000번 호출
+    public void updateSoldier(int id, int score) {
+        currentVersion[id]++; // 기존 점수 무력화
+
+        Node current = new Node(id, currentVersion[id], heads[teamIds[id]][score]);
+        heads[teamIds[id]][score] = current;
+
+        if (tails[teamIds[id]][score] == null) {
+            tails[teamIds[id]][score] = heads[teamIds[id]][score];
+        }
+    }
+
+    // teamId 팀의 모든 병사 점수에 scoreDelta를 더한다
+    // 100_000번 호출
+    public void updateTeam(int teamId, int scoreDelta) {
+        if (scoreDelta == 0) {
+            return;
+        }
+
+        if (scoreDelta < 0) {
+            // 음수
+            for (int i = 2; i <= 5; i++) {
+                int targetScore = Math.max(1, i + scoreDelta);
+
+                if (heads[teamId][i] == null) {
+                    continue;
+                }
+
+                // TODO 연결이 잘못됨
+
+
+                tails[teamId][i].next = heads[teamId][targetScore];
+                heads[teamId][targetScore] = heads[teamId][i];
+                tails[teamId][i] = heads[teamId][i] = null;
             }
-            if (changeLog[c].first == mIndex) {
-                return changeLog[c].second;
+            return;
+        }
+
+        // 양수
+        for (int i = 4; i >= 1; i--) {
+            int targetScore = Math.min(5, i + scoreDelta);
+
+            if (heads[teamId][i] == null) {
+                continue;
             }
-            c = prevChange[c];
+
+            tails[teamId][i].next = heads[teamId][targetScore];
+            heads[teamId][targetScore] = heads[teamId][i];
+            tails[teamId][i] = heads[teamId][i] = null;
         }
     }
 
-    class Pair {
-
-        int first;
-        int second;
-
-        public Pair(int first, int second) {
-            this.first = first;
-            this.second = second;
+    // teamId 팀의 병사 중 최고 병사의 id를 반환한다
+    // 100번 호출
+    public int bestSoldier(int teamId) {
+        int bestId = 0;
+        int currentScore = 5;
+        while (bestId == 0) {
+            Node current = heads[teamId][currentScore];
+            while (current != null) {
+                if (currentVersion[current.id] == current.version) {
+                    // 최신버전이므로 정답 갱신
+                    bestId = Math.max(bestId, current.id);
+                }
+                current = current.next;
+            }
+            currentScore--;
         }
+        return bestId;
     }
 }
