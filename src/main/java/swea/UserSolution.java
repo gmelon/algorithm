@@ -89,6 +89,8 @@ class UserSolution {
             return;
         }
 
+
+
         // 양수
         for (int i = 4; i >= 1; i--) {
             int targetScore = Math.min(5, i + scoreDelta);
